@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: pg-progressbar-prototype
+  datasource:
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://localhost:5433/${POSTGRES_DB}
+  jpa:
+    hibernate:
+      ddl-auto: update
