@@ -1,0 +1,36 @@
+GET http://localhost:8080/v1/search
+content-type: application/json
+
+{
+  "query": {
+    "combinator": "and",
+    "rules": [
+      {
+        "field": "diagnosis",
+        "operator": "=",
+        "value": "A"
+      },
+      {
+        "field": "medication",
+        "operator": "=",
+        "value": "X"
+      },
+      {
+        "combinator": "and",
+        "not": true,
+        "rules": [
+          {
+            "field": "hospitalization",
+            "operator": "=",
+            "value": "*"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+<> 2026-01-10T162243.400.json
+
+###
+
