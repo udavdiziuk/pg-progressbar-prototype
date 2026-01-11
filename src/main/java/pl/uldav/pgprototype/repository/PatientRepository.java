@@ -31,4 +31,12 @@ public class PatientRepository {
                 chunkSize
         );
     }
+
+    public Long countAll() {
+        return jdbcTemplate.queryForObject(
+            """
+            SELECT count(*)
+            FROM patients
+            """, Long.class);
+    }
 }

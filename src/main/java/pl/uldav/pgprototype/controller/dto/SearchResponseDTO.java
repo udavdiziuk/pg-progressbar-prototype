@@ -1,14 +1,14 @@
 package pl.uldav.pgprototype.controller.dto;
 
+import lombok.Builder;
 import lombok.Data;
+import pl.uldav.pgprototype.service.job.JobStatus;
 
-import java.time.OffsetDateTime;
+import java.util.UUID;
 
+@Builder
 @Data
 public class SearchResponseDTO {
-    private Long id;
-    private Long patientId;
-    private String eventType;
-    private OffsetDateTime eventTime;
-    private String value;
+    private UUID jobId;
+    private JobStatus jobStatus;
 }

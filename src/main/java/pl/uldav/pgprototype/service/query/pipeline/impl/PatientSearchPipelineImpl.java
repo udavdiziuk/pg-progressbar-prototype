@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.uldav.pgprototype.repository.PatientRepository;
 import pl.uldav.pgprototype.service.query.pipeline.PatientSearchPipeline;
 import pl.uldav.pgprototype.service.query.sql.SqlCondition;
+import pl.uldav.pgprototype.service.tracker.impl.JobProgressTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,10 @@ public class PatientSearchPipelineImpl implements PatientSearchPipeline {
     /**
      * Executes SQL created from AST query
      * @param sqlCondition - sql to execute
-     * @return - List of patientIds found by sqlCondition
+     * @param progressTracker - Tracks the progress of the sqlCondition execution
      */
     @Override
-    public List<Long> execute(SqlCondition sqlCondition) {
+    public void execute(SqlCondition sqlCondition, JobProgressTracker progressTracker) {
         List<Long> result = new ArrayList<>();
         long lastId = 0;
         long processed = 0;
@@ -42,12 +43,10 @@ public class PatientSearchPipelineImpl implements PatientSearchPipeline {
             List<Long> matched = filterChunk(chunk, sqlCondition);
             result.addAll(matched);
             lastId = chunk.getLast();
-            processed += chunk.size();
+            progressTracker.onChunkProcessed(chunk.size());
 
             log.info("Processed {} patients, matched {}", processed, result.size());
         }
-
-        return result;
     }
 
     /**
